@@ -1,5 +1,6 @@
 {
-  "name": "jsm_saas_app",
+  "name": "learning-management-system",
+  "description": "A comprehensive Learning Management System with AI-powered features",
   "version": "0.1.0",
   "private": true,
   "scripts": {
