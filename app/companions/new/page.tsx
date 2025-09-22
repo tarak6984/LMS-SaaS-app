@@ -5,6 +5,9 @@ import {newCompanionPermissions} from "@/lib/actions/companion.actions";
 import Image from "next/image";
 import Link from "next/link";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 const NewCompanion = async () => {
     const { userId } = await auth();
     if(!userId) redirect('/sign-in');

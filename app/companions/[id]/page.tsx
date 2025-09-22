@@ -5,6 +5,9 @@ import {getSubjectColor} from "@/lib/utils";
 import Image from "next/image";
 import CompanionComponent from "@/components/CompanionComponent";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 interface CompanionSessionPageProps {
     params: Promise<{ id: string}>;
 }

@@ -43,5 +43,13 @@ next-env.d.ts
 # clerk configuration (can include secrets)
 /.clerk/
 
-# Sentry Config File
-.env.sentry-build-plugin
+# Setup scripts (keep local only)
+database-setup.sql
+QUICK_DATABASE_SETUP.sql
+scripts/setup-database.js
+setup-env.js
+CURRENT_STATUS.md
+
+# IDE
+.vscode/
+.idea/

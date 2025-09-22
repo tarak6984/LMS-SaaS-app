@@ -7,7 +7,9 @@ import {cn} from "@/lib/utils";
 const navItems = [
     { label:'Home', href: '/' },
     { label: 'Companions', href: '/companions' },
-    { label: 'My Journey', href: 'my-journey' },
+    { label: 'My Journey', href: '/my-journey' },
+    { label: 'Help', href: '/help' },
+    { label: 'Settings', href: '/settings' },
 ]
 
 const NavItems = () => {

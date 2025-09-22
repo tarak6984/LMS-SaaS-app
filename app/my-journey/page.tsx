@@ -4,6 +4,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import {
