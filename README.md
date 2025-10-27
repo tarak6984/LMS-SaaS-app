@@ -98,8 +98,8 @@ Make sure you have the following installed on your machine:
 **Cloning the Repository**
 
 ```bash
-git clone https://github.com/adrianhajdin/saas-app.git
-cd saas-app
+git clone https://github.com/tarak6984/LMS-SaaS-app.git
+cd LMS-SaaS-app/saas-app
 ```
 
 **Installation**
@@ -112,28 +112,84 @@ npm install
 
 **Set Up Environment Variables**
 
-Create a new file named `.env` in the root of your project and add the following content:
+Create a new file named `.env.local` in the root of your project and add the following content:
 
 ```env
-# Sentry
-SENTRY_AUTH_TOKEN=
+# Vapi - AI Voice API (optional for voice features)
+NEXT_PUBLIC_VAPI_WEB_TOKEN=your_vapi_web_token_here
 
-# Vapi
-NEXT_PUBLIC_VAPI_WEB_TOKEN=
-
-# Clerk
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
+# Clerk - Authentication (required)
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key_here
+CLERK_SECRET_KEY=your_clerk_secret_key_here
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
 NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
 
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
+# Supabase - Database (required)
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
+
+# Development
+NODE_ENV=development
 ```
 
-Replace the placeholder values with your actual ImageKit, NeonDB, Upstash, and Resend credentials. You can obtain these credentials by signing up on: [Supabase](https://supabase.com/dashboard), [Clerk](https://jsm.dev/converso-clerk), [Sentry](https://jsm.dev/converso-sentry), [Vapi](https://jsm.dev/converso-vapi).
+You can obtain these credentials by signing up on:
+- [Supabase](https://supabase.com/dashboard) - For database
+- [Clerk](https://clerk.com) - For authentication
+- [Vapi](https://vapi.ai) - For AI voice features (optional)
+
+**Set Up Supabase Database**
+
+After creating your Supabase project, run the following SQL in your Supabase SQL Editor to create the required tables:
+
+```sql
+-- Create companions table
+CREATE TABLE companions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  topic TEXT NOT NULL,
+  voice TEXT NOT NULL,
+  style TEXT NOT NULL,
+  duration INTEGER NOT NULL,
+  author TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create session_history table
+CREATE TABLE session_history (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  companion_id UUID REFERENCES companions(id),
+  user_id TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create bookmarks table
+CREATE TABLE bookmarks (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  companion_id UUID REFERENCES companions(id),
+  user_id TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(companion_id, user_id)
+);
+
+-- Enable Row Level Security
+ALTER TABLE companions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE session_history ENABLE ROW LEVEL SECURITY;
+ALTER TABLE bookmarks ENABLE ROW LEVEL SECURITY;
+
+-- Create policies
+CREATE POLICY "Enable read access for all users" ON companions FOR SELECT USING (true);
+CREATE POLICY "Enable insert for authenticated users only" ON companions FOR INSERT WITH CHECK (auth.uid()::text = author);
+CREATE POLICY "Enable update for users based on author" ON companions FOR UPDATE USING (auth.uid()::text = author);
+
+CREATE POLICY "Enable read access for own records" ON session_history FOR SELECT USING (auth.uid()::text = user_id);
+CREATE POLICY "Enable insert for authenticated users only" ON session_history FOR INSERT WITH CHECK (auth.uid()::text = user_id);
+
+CREATE POLICY "Enable read access for own bookmarks" ON bookmarks FOR SELECT USING (auth.uid()::text = user_id);
+CREATE POLICY "Enable insert for authenticated users only" ON bookmarks FOR INSERT WITH CHECK (auth.uid()::text = user_id);
+CREATE POLICY "Enable delete for own bookmarks" ON bookmarks FOR DELETE USING (auth.uid()::text = user_id);
+```
 
 **Running the Project**
 
@@ -143,6 +199,16 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
 
-## <a name="links">🔗 Assets</a>
+## <a name="links">🔗 Links & Resources</a>
 
-Assets and snippets used in the project can be found in the project's public directory.
+- **Live Demo**: [https://saas-app-jade-gamma.vercel.app/](https://saas-app-jade-gamma.vercel.app/)
+- **GitHub Repository**: [https://github.com/tarak6984/LMS-SaaS-app](https://github.com/tarak6984/LMS-SaaS-app)
+- **Assets**: All assets and snippets can be found in the project's public directory
+
+## 📝 Additional Documentation
+
+For detailed setup instructions, see [SETUP.md](SETUP.md)
+
+---
+
+Built with ❤️ using Next.js, Clerk, Supabase, and Vapi
