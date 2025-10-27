@@ -78,7 +78,15 @@ export const getRecentSessions = async (limit = 10) => {
 
     if(error) throw new Error(error.message);
 
-    return data.map(({ companions }) => companions);
+    // Deduplicate companions by ID to avoid duplicate keys in React
+    const companionsMap = new Map();
+    data.forEach(({ companions }) => {
+        if (companions && !companionsMap.has(companions.id)) {
+            companionsMap.set(companions.id, companions);
+        }
+    });
+    
+    return Array.from(companionsMap.values());
 }
 
 export const getUserSessions = async (userId: string, limit = 10) => {
@@ -92,7 +100,15 @@ export const getUserSessions = async (userId: string, limit = 10) => {
 
     if(error) throw new Error(error.message);
 
-    return data.map(({ companions }) => companions);
+    // Deduplicate companions by ID to avoid duplicate keys in React
+    const companionsMap = new Map();
+    data.forEach(({ companions }) => {
+        if (companions && !companionsMap.has(companions.id)) {
+            companionsMap.set(companions.id, companions);
+        }
+    });
+    
+    return Array.from(companionsMap.values());
 }
 
 export const getUserCompanions = async (userId: string) => {
