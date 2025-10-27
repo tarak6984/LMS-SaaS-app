@@ -10,7 +10,17 @@
   </div>
 
   <h3 align="center">Learning Management System (LMS)</h3>
+  
+  <div align="center">
+    <a href="https://saas-app-jade-gamma.vercel.app/" target="_blank">
+      <img src="https://img.shields.io/badge/LIVE%20DEMO-00C7B7?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+    </a>
+  </div>
 </div>
+
+## 🔗 [Live Demo](https://saas-app-jade-gamma.vercel.app/)
+
+Experience the application live at: **[https://saas-app-jade-gamma.vercel.app/](https://saas-app-jade-gamma.vercel.app/)**
 
 ## 📋 <a name="table">Table of Contents</a>
 
