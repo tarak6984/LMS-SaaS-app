@@ -1,12 +1,15 @@
 <div align="center">
-  <h1>Learning Management System (LMS)</h1>
+  <br />
+  <img src="public/readme/hero.png" alt="Learning Management System Banner">
+  <br />
   
   <div>
     <img src="https://img.shields.io/badge/-Next.JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=black" alt="next.js" />
     <img src="https://img.shields.io/badge/-Vapi-black?style=for-the-badge&logoColor=white&logo=vapi.com&color=green" alt="vapi" />
     <img src="https://img.shields.io/badge/-Tailwind-00BCFF?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="tailwind" />
   </div>
-  <br />
+  
+  <h3 align="center">Learning Management System (LMS)</h3>
   
   <div align="center">
     <a href="https://saas-app-jade-gamma.vercel.app/" target="_blank">
